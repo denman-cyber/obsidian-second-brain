@@ -16,4 +16,7 @@ Brug denne log til ændringer udført af AI, automatiseringer eller større manu
 | 2026-07-04 | Codex | Tilføjede start, stop og status scripts til Telegram botten | Scripts | OK |
 | 2026-07-04 | Codex | Tilføjede launchd-servicefil til Telegram botten | Setup | OK |
 | 2026-07-04 | Codex | Tilføjede install-script til Telegram autostart, da launchctl er blokeret fra Codex-sessionen | Scripts, Setup | Needs local Terminal run |
+| 2026-07-04 | Codex | Fejlsøgte Telegram bot adgang til Documents og tilføjede Mac-tilladelsesguide | Setup, Scripts | Needs macOS Full Disk Access |
 | 2026-07-04 19:51:04 | Local command | Added todo | 40_Daily/2026-07-04.md | OK |
+| 2026-07-04 20:09:47 | Local command | Added todo | 40_Daily/2026-07-04.md | OK |
+| 2026-07-04 20:10:48 | Local command | Added todo | 40_Daily/2026-07-04.md | OK |

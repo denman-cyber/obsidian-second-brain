@@ -17,6 +17,13 @@ append_after_heading() {
   local file="$1"
   local heading="$2"
   local line="$3"
+
+  if [[ ! -r "$file" || ! -w "$file" ]]; then
+    echo "Kan ikke åbne daily note. macOS blokerer sandsynligvis botten fra Documents-mappen: $file"
+    echo "Giv Python/zsh Full Disk Access, og kør install-scriptet igen."
+    exit 13
+  fi
+
   awk -v heading="$heading" -v line="$line" '
     $0 == heading && done == 0 {
       print
@@ -40,6 +47,10 @@ log_action() {
   local action="$1"
   local files="$2"
   local result="$3"
+  if [[ ! -w "$LOG_FILE" ]]; then
+    echo "Kan ikke skrive til log.md. macOS blokerer sandsynligvis botten fra vaulten."
+    exit 13
+  fi
   printf '| %s | Local command | %s | %s | %s |\n' "$NOW" "$action" "$files" "$result" >> "$LOG_FILE"
 }
 

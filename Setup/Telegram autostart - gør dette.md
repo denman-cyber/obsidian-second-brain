@@ -50,3 +50,13 @@ Token og chat-id ligger i:
 ```
 
 Den fil ligger uden for vaulten og bliver ikke pushet til GitHub.
+
+## Hvis botten svarer med `awk: can't open file`
+
+Så mangler macOS-tilladelse til Documents-mappen.
+
+Se:
+
+```text
+Setup/Mac tilladelser til Telegram bot.md
+```
