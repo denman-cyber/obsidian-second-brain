@@ -107,7 +107,7 @@ CRM må gerne linke til:
 - wiki-emner
 - opfølgningsopgaver
 
-## `40_Daily/`
+## `daily/`
 
 Daily notes og dagens to do. Dette er dit cockpit, ikke din vidensbase.
 

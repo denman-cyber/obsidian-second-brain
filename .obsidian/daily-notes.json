@@ -1,5 +1,5 @@
 {
-  "folder": "40_Daily",
+  "folder": "daily",
   "format": "YYYY-MM-DD",
   "template": "Templates/Daily Note.md"
 }

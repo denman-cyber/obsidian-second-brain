@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 VAULT_DIR="${SECOND_BRAIN_VAULT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
 
 DAY="${1:-$(date +%F)}"
-DAILY_DIR="$VAULT_DIR/40_Daily"
+DAILY_DIR="$VAULT_DIR/daily"
 TEMPLATE="$VAULT_DIR/Templates/Daily Note.md"
 TARGET="$DAILY_DIR/$DAY.md"
 

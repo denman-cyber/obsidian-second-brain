@@ -3,7 +3,7 @@
 Hvis botten svarer med en fejl som:
 
 ```text
-awk: can't open file /Users/christian/Documents/Codex/Second brain/40_Daily/...
+awk: can't open file /Users/christian/Documents/Codex/Second brain/daily/...
 ```
 
 så kører botten, men macOS giver ikke baggrundsservicen adgang til Documents-mappen.

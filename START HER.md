@@ -25,7 +25,7 @@ Hvis du sender flere ting i samme Telegram-besked, så brug én kommando pr. lin
 
 Kig i:
 
-- [[40_Daily/2026-07-04]]
+- [[daily/2026-07-04]]
 - [[raw]]
 
 ## Web og YouTube

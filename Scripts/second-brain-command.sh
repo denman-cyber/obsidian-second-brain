@@ -6,7 +6,7 @@ VAULT_DIR="${SECOND_BRAIN_VAULT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
 DAY="$(date +%F)"
 NOW="$(date '+%Y-%m-%d %H:%M:%S')"
 
-DAILY_NOTE="$VAULT_DIR/40_Daily/$DAY.md"
+DAILY_NOTE="$VAULT_DIR/daily/$DAY.md"
 LOG_FILE="$VAULT_DIR/log.md"
 
 safe_name() {
@@ -76,7 +76,7 @@ case "$LOWER" in
   todo\ *)
     TEXT="${COMMAND#todo }"
     append_after_heading "$DAILY_NOTE" "## I dag" "- [ ] $TEXT"
-    log_action "Added todo" "40_Daily/$DAY.md" "OK"
+    log_action "Added todo" "daily/$DAY.md" "OK"
     echo "Tilføjet til dagens liste: $TEXT"
     ;;
 
@@ -84,11 +84,11 @@ case "$LOWER" in
     TEXT="${COMMAND#done }"
     if grep -F -- "- [ ] $TEXT" "$DAILY_NOTE" >/dev/null; then
       perl -0pi -e "s/\\Q- [ ] $TEXT\\E/- [x] $TEXT/" "$DAILY_NOTE"
-      log_action "Marked todo done" "40_Daily/$DAY.md" "OK"
+      log_action "Marked todo done" "daily/$DAY.md" "OK"
       echo "Markeret som færdig: $TEXT"
     else
       echo "Jeg fandt ikke opgaven i dagens note: $TEXT"
-      log_action "Marked todo done" "40_Daily/$DAY.md" "Not found"
+      log_action "Marked todo done" "daily/$DAY.md" "Not found"
     fi
     ;;
 
@@ -96,8 +96,8 @@ case "$LOWER" in
     TEXT="${COMMAND#plan i morgen }"
     TOMORROW="$(date -v+1d +%F 2>/dev/null || date -d tomorrow +%F)"
     "$SCRIPT_DIR/create-daily-note.sh" "$TOMORROW" >/dev/null
-    append_after_heading "$VAULT_DIR/40_Daily/$TOMORROW.md" "## I dag" "- [ ] $TEXT"
-    log_action "Planned tomorrow" "40_Daily/$TOMORROW.md" "OK"
+    append_after_heading "$VAULT_DIR/daily/$TOMORROW.md" "## I dag" "- [ ] $TEXT"
+    log_action "Planned tomorrow" "daily/$TOMORROW.md" "OK"
     echo "Planlagt til i morgen: $TEXT"
     ;;
 

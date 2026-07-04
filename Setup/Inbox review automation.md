@@ -16,6 +16,7 @@ og omsæt det til:
 wiki/
 crm/
 journal/
+daily/
 index.md
 log.md
 ```

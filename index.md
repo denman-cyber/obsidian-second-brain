@@ -12,21 +12,15 @@ Start her: [[START HER]]
 - [[journal]]
 
 ## Dagligt
-- [[40_Daily]]
-- [[50_Tasks]]
-- [[60_Reviews]]
+- [[daily]]
 
 ## Arbejde og projekter
-- [[20_Projects]]
-- [[30_Areas]]
 - [[crm]]
-- [[thellufsenfoto-hermes]]
 
 ## Viden
 - [[wiki]]
 - [[wiki/Sådan bliver noter anvendelige]]
 - [[raw]]
-- [[00_Inbox]]
 
 ## AI og drift
 - [[agents]]
@@ -35,8 +29,7 @@ Start her: [[START HER]]
 
 ## Hurtig brug
 - Nye noter, ideer og uklare ting starter i `raw`.
-- Dagens plan ligger i `40_Daily`.
-- Opgaver der rækker ud over i dag ligger i `50_Tasks`.
+- Dagens plan ligger i `daily`.
 - Vigtige AI-forslag lander i `80_AI-Review`, før de bruges.
 - Web og YouTube-kilder starter i `raw`.
 - Kunder starter i `crm`.

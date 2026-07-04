@@ -64,15 +64,15 @@ Tilføjer opgaven til morgendagens daily note.
 
 ### `note [tekst]`
 
-Opretter en note i `00_Inbox`.
+Opretter en note i `raw`.
 
 ### `shoot [tekst]`
 
-Opretter input i `thellufsenfoto-hermes/raw`.
+Opretter input i `raw`.
 
 ### `kunde [tekst]`
 
-Opretter eller opdaterer kundekort i `thellufsenfoto-hermes/clients`.
+Opretter eller opdaterer kundekort i `crm`.
 
 ## Sikkerhedsregel
 

@@ -30,7 +30,7 @@ todo Test live bot
 Tjek derefter dagens note:
 
 ```text
-40_Daily/2026-07-04.md
+daily/2026-07-04.md
 ```
 
 ## Stop senere
