@@ -8,7 +8,7 @@
   <key>ProgramArguments</key>
   <array>
     <string>/bin/zsh</string>
-    <string>/Users/christian/Documents/Codex/Second brain/Scripts/send-telegram-reminder.sh</string>
+    <string>/Users/christian/.second-brain/send-telegram-reminder.sh</string>
     <string>midday</string>
   </array>
   <key>StartCalendarInterval</key>
