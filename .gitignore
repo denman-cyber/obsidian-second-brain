@@ -1,0 +1,20 @@
+# Secrets and local config
+.env
+.env.*
+*.key
+*.pem
+secrets/
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+
+# Obsidian local/cache noise
+.obsidian/cache
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Temporary files
+*.tmp
+*.temp
+~$*

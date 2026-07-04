@@ -1,0 +1,13 @@
+# AI- og systemlog
+
+Brug denne log til ændringer udført af AI, automatiseringer eller større manuelle ændringer.
+
+| Tid | Agent | Handling | Filer | Resultat |
+|---|---|---|---|---|
+| 2026-07-04 | Codex | Oprettede grundstruktur, templates og kontrolfiler | Vault root | OK |
+| 2026-07-04 | Codex | Tilføjede lokale scripts og setup-noter til daily og Telegram-flow | Scripts, Setup | OK |
+| 2026-07-04 16:44:31 | Local command | Added todo | 40_Daily/2026-07-04.md | OK |
+| 2026-07-04 16:44:31 | Local command | Created shoot input | thellufsenfoto-hermes/raw/20260704-164431-shoot.md | OK |
+| 2026-07-04 16:44:31 | Local command | Created inbox note | 00_Inbox/20260704-164431-test-af-hurtig-inbox-note.md | OK |
+| 2026-07-04 16:44:34 | Local command | Marked todo done | 40_Daily/2026-07-04.md | OK |
+| 2026-07-04 | Codex | Tilføjede Telegram bot-script, reminder-script og LaunchAgent-skabelon | Scripts, Setup | OK |
