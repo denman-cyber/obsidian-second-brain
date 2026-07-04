@@ -37,6 +37,10 @@ web https://example.com Artikel om markedsføring
 youtube https://youtube.com/... Video om portrætlys
 ```
 
+Hvis du bruger Obsidian Web Clipper, skal den gemme i `raw/`.
+
+Se: [[Setup/Obsidian Web Clipper]]
+
 De lander i:
 
 ```text
