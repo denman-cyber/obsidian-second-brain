@@ -55,3 +55,48 @@ shoot Kunde X, lørdag kl. 10
 ## 6. Næste trin
 
 Når botten virker manuelt, kan den startes automatisk på Mac Mini med LaunchAgent.
+
+## Daglig drift
+
+Botten kan startes, stoppes og tjekkes sådan:
+
+```bash
+Scripts/start-telegram-bot.sh
+Scripts/status-telegram-bot.sh
+Scripts/stop-telegram-bot.sh
+```
+
+Logfiler:
+
+```text
+/tmp/second-brain-telegram-bot.log
+/tmp/second-brain-telegram-bot.err
+```
+
+Bemærk: Denne metode holder botten kørende i baggrunden, men autostart efter genstart kræver en LaunchAgent i `~/Library/LaunchAgents`.
+
+## Aktuel launchd-service
+
+Der ligger også en launchd-plist her:
+
+```text
+Setup/com.christian.secondbrain.telegram-bot.plist
+```
+
+Den kan indlæses i den aktuelle macOS-session med:
+
+```bash
+launchctl bootstrap gui/$(id -u) "Setup/com.christian.secondbrain.telegram-bot.plist"
+```
+
+For permanent autostart efter genstart skal plist-filen kopieres til:
+
+```text
+~/Library/LaunchAgents/
+```
+
+Der er lavet et script til det:
+
+```bash
+Scripts/install-telegram-launchagent.sh
+```

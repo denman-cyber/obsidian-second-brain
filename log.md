@@ -13,4 +13,7 @@ Brug denne log til ændringer udført af AI, automatiseringer eller større manu
 | 2026-07-04 | Codex | Tilføjede Telegram bot-script, reminder-script og LaunchAgent-skabelon | Scripts, Setup | OK |
 | 2026-07-04 | Codex | Oprettede lokal secret-placeholder uden for vaulten og Telegram tjekliste | ~/.second-brain.env, Setup | OK |
 | 2026-07-04 | Codex | Koblede Telegram bot-token og chat-id på lokalt, testede besked og reminder | ~/.second-brain.env, Scripts | OK |
+| 2026-07-04 | Codex | Tilføjede start, stop og status scripts til Telegram botten | Scripts | OK |
+| 2026-07-04 | Codex | Tilføjede launchd-servicefil til Telegram botten | Setup | OK |
+| 2026-07-04 | Codex | Tilføjede install-script til Telegram autostart, da launchctl er blokeret fra Codex-sessionen | Scripts, Setup | Needs local Terminal run |
 | 2026-07-04 19:51:04 | Local command | Added todo | 40_Daily/2026-07-04.md | OK |

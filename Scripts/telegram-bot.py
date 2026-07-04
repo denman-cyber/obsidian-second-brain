@@ -6,6 +6,7 @@ import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
+from typing import Optional
 
 
 VAULT_DIR = Path(__file__).resolve().parents[1]
@@ -29,7 +30,7 @@ def api_url(method: str) -> str:
     return f"https://api.telegram.org/bot{token}/{method}"
 
 
-def telegram_request(method: str, data: dict | None = None) -> dict:
+def telegram_request(method: str, data: Optional[dict] = None) -> dict:
     encoded = None
     if data is not None:
         encoded = urllib.parse.urlencode(data).encode()
