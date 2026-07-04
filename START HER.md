@@ -81,6 +81,12 @@ En gang om ugen:
 4. Arkiver resten.
 5. Vælg næste uges vigtigste projekter.
 
+## Automatisk inbox review
+
+Der kører et forsigtigt review-job hver 4. time, som hjælper med at gøre inbox, webkilder og YouTube-kilder mere søgbare og anvendelige.
+
+Se: [[Setup/Inbox review automation]]
+
 ## Reglen
 
 Systemet skal gøre ting nemmere. Hvis en mappe eller automation begynder at føles tung, forenkler vi.

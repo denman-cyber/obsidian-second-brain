@@ -25,5 +25,6 @@ Brug denne log til ændringer udført af AI, automatiseringer eller større manu
 | 2026-07-04 | Codex | Tilføjede installerbare LaunchAgents til Telegram-påmindelser og auto-backup | Scripts, Setup | Ready |
 | 2026-07-04 | Codex | Opdaterede Telegram botten til at håndtere flere kommandoer i samme besked | Scripts | Ready |
 | 2026-07-04 | Codex | Forenklede systemet til Mac-first brug med web, YouTube, CRM og lokale shoot briefs | Scripts, Templates, START HER | Ready |
+| 2026-07-04 | Codex | Tilføjede regler for automatisk inbox review hver 4. time | Setup | Ready |
 | 2026-07-04 20:29:59 | Local command | Added todo | 40_Daily/2026-07-04.md | OK |
 | 2026-07-04 20:34:21 | Local command | Created inbox note | 00_Inbox/20260704-203421-ide-til-ny-foto-pakke-shoot-kunde-x-lørdag-kl-10-portrætter-plan-i-morgen-følg-op-på-tilbud-done-backup-test-fra-telegram.md | OK |
