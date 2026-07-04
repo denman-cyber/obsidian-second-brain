@@ -13,6 +13,12 @@ safe_name() {
   echo "$1" | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]æøåÆØÅ' '-' | sed 's/^-//; s/-$//'
 }
 
+timestamp_file() {
+  local prefix="$1"
+  local text="$2"
+  echo "$(date '+%Y%m%d-%H%M%S')-$prefix-$(safe_name "$text").md"
+}
+
 append_after_heading() {
   local file="$1"
   local heading="$2"
@@ -116,33 +122,142 @@ EOF
     echo "Oprettet i inbox: $FILE"
     ;;
 
-  shoot\ *)
-    TEXT="${COMMAND#shoot }"
-    FILE="$VAULT_DIR/thellufsenfoto-hermes/raw/$(date '+%Y%m%d-%H%M%S')-shoot.md"
+  web\ *)
+    TEXT="${COMMAND#web }"
+    URL="$(echo "$TEXT" | awk '{print $1}')"
+    TITLE="$(echo "$TEXT" | sed "s|^$URL *||")"
+    if [[ -z "$TITLE" ]]; then
+      TITLE="$URL"
+    fi
+    FILE="$VAULT_DIR/10_Knowledge/Sources/$(timestamp_file web "$TITLE")"
     cat > "$FILE" <<EOF
 ---
-type: raw_input
+type: source
+source_type: webpage
+source_url: $URL
+captured: $NOW
+status: raw
+sensitivity: private
+ai_lock: false
+---
+
+# $TITLE
+
+## Link
+$URL
+
+## Hvorfor gemt?
+- 
+
+## Noter
+- 
+
+## Mulige forbindelser
+- 
+
+## Skal bearbejdes til
+- [ ] Vidensnote
+- [ ] Projekt
+- [ ] Opgave
+- [ ] Arkiv
+EOF
+    log_action "Created web source" "10_Knowledge/Sources/$(basename "$FILE")" "OK"
+    echo "Gemt som webkilde: $FILE"
+    ;;
+
+  youtube\ *)
+    TEXT="${COMMAND#youtube }"
+    URL="$(echo "$TEXT" | awk '{print $1}')"
+    TITLE="$(echo "$TEXT" | sed "s|^$URL *||")"
+    if [[ -z "$TITLE" ]]; then
+      TITLE="$URL"
+    fi
+    FILE="$VAULT_DIR/10_Knowledge/Sources/$(timestamp_file youtube "$TITLE")"
+    cat > "$FILE" <<EOF
+---
+type: source
+source_type: youtube
+source_url: $URL
+captured: $NOW
+status: raw
+sensitivity: private
+ai_lock: false
+---
+
+# $TITLE
+
+## Video
+$URL
+
+## Hvorfor gemt?
+- 
+
+## Noter
+- 
+
+## Ideer eller pointer
+- 
+
+## Mulige forbindelser
+- 
+
+## Skal bearbejdes til
+- [ ] Vidensnote
+- [ ] Projekt
+- [ ] Opgave
+- [ ] Arkiv
+EOF
+    log_action "Created YouTube source" "10_Knowledge/Sources/$(basename "$FILE")" "OK"
+    echo "Gemt som YouTube-kilde: $FILE"
+    ;;
+
+  shoot\ *)
+    TEXT="${COMMAND#shoot }"
+    FILE="$VAULT_DIR/20_Projects/$(timestamp_file shoot "$TEXT")"
+    cat > "$FILE" <<EOF
+---
+type: shoot_brief
 source: telegram_or_local_command
 created: $NOW
-status: raw
+status: planning
 area: thellufsenfoto
 sensitivity: business
 ai_lock: false
 ---
 
-# Shoot input
+# Shoot
 
+## Rå briefing
 $TEXT
+
+## Kunde
+- 
+
+## Tid og sted
+- 
+
+## Formål
+- 
+
+## Shot list
+- [ ] 
+
+## Leverancer
+- 
+
+## Opfølgning
+- [ ] 
 EOF
-    log_action "Created shoot input" "thellufsenfoto-hermes/raw/$(basename "$FILE")" "OK"
-    echo "Oprettet shoot-input: $FILE"
+    log_action "Created shoot brief" "20_Projects/$(basename "$FILE")" "OK"
+    echo "Oprettet shoot brief: $FILE"
     ;;
 
   kunde\ *)
     TEXT="${COMMAND#kunde }"
     NAME="$(echo "$TEXT" | cut -d',' -f1 | sed 's/^ *//; s/ *$//')"
     SLUG="$(safe_name "$NAME")"
-    FILE="$VAULT_DIR/thellufsenfoto-hermes/clients/$SLUG.md"
+    FILE="$VAULT_DIR/30_Areas/CRM/$SLUG.md"
+    mkdir -p "$VAULT_DIR/30_Areas/CRM"
     if [[ ! -f "$FILE" ]]; then
       cat > "$FILE" <<EOF
 ---
@@ -166,12 +281,12 @@ EOF
     else
       printf '\n- %s: %s\n' "$NOW" "$TEXT" >> "$FILE"
     fi
-    log_action "Created or updated client" "thellufsenfoto-hermes/clients/$(basename "$FILE")" "OK"
+    log_action "Created or updated client" "30_Areas/CRM/$(basename "$FILE")" "OK"
     echo "Kunde opdateret: $FILE"
     ;;
 
   *)
-    echo "Ukendt kommando. Brug todo, done, plan i morgen, note, shoot eller kunde."
+    echo "Ukendt kommando. Brug todo, done, plan i morgen, note, web, youtube, shoot eller kunde."
     exit 1
     ;;
 esac

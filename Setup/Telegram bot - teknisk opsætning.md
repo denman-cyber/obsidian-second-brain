@@ -49,13 +49,18 @@ Skriv derefter til botten:
 ```text
 todo Ring til kunde
 note Ide til shoot
+web https://example.com Artikel jeg vil gemme
+youtube https://youtube.com/... Video om portrætlys
 shoot Kunde X, lørdag kl. 10
+kunde Kunde X, ønsker billeder til hjemmeside
 ```
 
-Du kan også sende flere kommandoer i samme besked. Mest stabilt er én kommando pr. linje:
+Du kan også sende flere kommandoer i samme besked, men brug én kommando pr. linje:
 
 ```text
 note Ide til ny foto-pakke
+web https://example.com Artikel om markedsføring
+youtube https://youtube.com/... Video om portrætlys
 shoot Kunde X, lørdag kl 10, portrætter
 plan i morgen Følg op på tilbud
 done Backup test fra Telegram

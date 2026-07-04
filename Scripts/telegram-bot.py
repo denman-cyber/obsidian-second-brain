@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import json
 import os
-import re
 import subprocess
 import time
 import urllib.parse
@@ -44,15 +43,7 @@ def send_message(chat_id: int, text: str) -> None:
 
 
 def split_commands(text: str) -> list:
-    inline_allowed = r"(?:todo|done|note|shoot|plan i morgen)"
-    lines = [line.strip() for line in text.splitlines() if line.strip()]
-    commands = []
-
-    for line in lines or [text.strip()]:
-        parts = [part.strip() for part in re.split(rf"(?i)(?=\b{inline_allowed}\s+)", line) if part.strip()]
-        commands.extend(parts)
-
-    return commands
+    return [line.strip() for line in text.splitlines() if line.strip()]
 
 
 def run_command(command: str) -> str:
@@ -67,13 +58,13 @@ def run_command(command: str) -> str:
 
 
 def handle_message(chat_id: int, text: str) -> None:
-    allowed_prefixes = ("todo ", "done ", "note ", "plan i morgen ", "shoot ", "kunde ")
+    allowed_prefixes = ("todo ", "done ", "note ", "web ", "youtube ", "plan i morgen ", "shoot ", "kunde ")
     lower = text.lower()
 
     if lower in ("/start", "start", "hjælp", "help"):
         send_message(
             chat_id,
-            "Skriv fx: todo Ring til kunde, done Ring til kunde, note Ide, plan i morgen Følg op, shoot Kunde X, eller kunde Kunde X.",
+            "Skriv fx: todo Ring til kunde, note Ide, web https://..., youtube https://..., shoot Kunde X, eller kunde Kunde X.",
         )
         return
 
