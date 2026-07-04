@@ -1,6 +1,12 @@
-# CRM
+# CRM legacy
 
-Her ligger enkle kundekort og kontaktpersoner.
+Denne mappe er nu legacy.
+
+Ny CRM-mappe er:
+
+```text
+crm/
+```
 
 Brug Telegram:
 

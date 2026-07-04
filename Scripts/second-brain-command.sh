@@ -103,10 +103,10 @@ case "$LOWER" in
 
   note\ *)
     TEXT="${COMMAND#note }"
-    FILE="$VAULT_DIR/00_Inbox/$(date '+%Y%m%d-%H%M%S')-$(safe_name "$TEXT").md"
+    FILE="$VAULT_DIR/raw/$(date '+%Y%m%d-%H%M%S')-note-$(safe_name "$TEXT").md"
     cat > "$FILE" <<EOF
 ---
-type: inbox_note
+type: raw_note
 source: telegram_or_local_command
 created: $NOW
 status: raw
@@ -118,8 +118,8 @@ ai_lock: false
 
 $TEXT
 EOF
-    log_action "Created inbox note" "00_Inbox/$(basename "$FILE")" "OK"
-    echo "Oprettet i inbox: $FILE"
+    log_action "Created raw note" "raw/$(basename "$FILE")" "OK"
+    echo "Oprettet i raw: $FILE"
     ;;
 
   web\ *)
@@ -129,7 +129,7 @@ EOF
     if [[ -z "$TITLE" ]]; then
       TITLE="$URL"
     fi
-    FILE="$VAULT_DIR/10_Knowledge/Sources/$(timestamp_file web "$TITLE")"
+    FILE="$VAULT_DIR/raw/$(timestamp_file web "$TITLE")"
     cat > "$FILE" <<EOF
 ---
 type: source
@@ -161,7 +161,7 @@ $URL
 - [ ] Opgave
 - [ ] Arkiv
 EOF
-    log_action "Created web source" "10_Knowledge/Sources/$(basename "$FILE")" "OK"
+    log_action "Created web source" "raw/$(basename "$FILE")" "OK"
     echo "Gemt som webkilde: $FILE"
     ;;
 
@@ -172,7 +172,7 @@ EOF
     if [[ -z "$TITLE" ]]; then
       TITLE="$URL"
     fi
-    FILE="$VAULT_DIR/10_Knowledge/Sources/$(timestamp_file youtube "$TITLE")"
+    FILE="$VAULT_DIR/raw/$(timestamp_file youtube "$TITLE")"
     cat > "$FILE" <<EOF
 ---
 type: source
@@ -207,25 +207,25 @@ $URL
 - [ ] Opgave
 - [ ] Arkiv
 EOF
-    log_action "Created YouTube source" "10_Knowledge/Sources/$(basename "$FILE")" "OK"
+    log_action "Created YouTube source" "raw/$(basename "$FILE")" "OK"
     echo "Gemt som YouTube-kilde: $FILE"
     ;;
 
   shoot\ *)
     TEXT="${COMMAND#shoot }"
-    FILE="$VAULT_DIR/20_Projects/$(timestamp_file shoot "$TEXT")"
+    FILE="$VAULT_DIR/raw/$(timestamp_file shoot "$TEXT")"
     cat > "$FILE" <<EOF
 ---
-type: shoot_brief
+type: raw_shoot_brief
 source: telegram_or_local_command
 created: $NOW
-status: planning
+status: raw
 area: thellufsenfoto
 sensitivity: business
 ai_lock: false
 ---
 
-# Shoot
+# Raw Shoot Brief
 
 ## Rå briefing
 $TEXT
@@ -248,16 +248,16 @@ $TEXT
 ## Opfølgning
 - [ ] 
 EOF
-    log_action "Created shoot brief" "20_Projects/$(basename "$FILE")" "OK"
-    echo "Oprettet shoot brief: $FILE"
+    log_action "Created raw shoot brief" "raw/$(basename "$FILE")" "OK"
+    echo "Oprettet rå shoot brief: $FILE"
     ;;
 
   kunde\ *)
     TEXT="${COMMAND#kunde }"
     NAME="$(echo "$TEXT" | cut -d',' -f1 | sed 's/^ *//; s/ *$//')"
     SLUG="$(safe_name "$NAME")"
-    FILE="$VAULT_DIR/30_Areas/CRM/$SLUG.md"
-    mkdir -p "$VAULT_DIR/30_Areas/CRM"
+    FILE="$VAULT_DIR/crm/$SLUG.md"
+    mkdir -p "$VAULT_DIR/crm"
     if [[ ! -f "$FILE" ]]; then
       cat > "$FILE" <<EOF
 ---
@@ -281,12 +281,34 @@ EOF
     else
       printf '\n- %s: %s\n' "$NOW" "$TEXT" >> "$FILE"
     fi
-    log_action "Created or updated client" "30_Areas/CRM/$(basename "$FILE")" "OK"
+    log_action "Created or updated client" "crm/$(basename "$FILE")" "OK"
     echo "Kunde opdateret: $FILE"
     ;;
 
+  journal\ *)
+    TEXT="${COMMAND#journal }"
+    mkdir -p "$VAULT_DIR/journal"
+    FILE="$VAULT_DIR/journal/$DAY.md"
+    if [[ ! -f "$FILE" ]]; then
+      cat > "$FILE" <<EOF
+---
+type: journal
+date: $DAY
+status: active
+sensitivity: private
+ai_lock: false
+---
+
+# Journal $DAY
+EOF
+    fi
+    printf '\n## %s\n\n%s\n' "$NOW" "$TEXT" >> "$FILE"
+    log_action "Created journal entry" "journal/$DAY.md" "OK"
+    echo "Tilføjet til journal: $FILE"
+    ;;
+
   *)
-    echo "Ukendt kommando. Brug todo, done, plan i morgen, note, web, youtube, shoot eller kunde."
+    echo "Ukendt kommando. Brug todo, done, plan i morgen, note, web, youtube, journal, shoot eller kunde."
     exit 1
     ;;
 esac

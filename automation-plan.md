@@ -9,10 +9,11 @@ Dette er planen for automations, før de sættes aktivt op.
 - Send morgenpåmindelse via Telegram, når Telegram er koblet på.
 - Lokal script-klargøring: `Scripts/create-daily-note.sh`.
 
-## Fase B: Inbox
+## Fase B: Raw to Wiki
 
-- Saml hurtige noter i `00_Inbox`.
-- Foreslå placering: daily, task, project, knowledge eller archive.
+- Saml hurtige noter, web, YouTube og shoot-input i `raw`.
+- Behandl rå input til `wiki`, `crm`, `journal` eller opgaver.
+- Flyt behandlede rå filer til `raw/processed`.
 - Flyt ikke følsomt indhold uden manuel godkendelse.
 
 ## Fase C: Git-backup

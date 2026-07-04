@@ -1,55 +1,85 @@
-# Inbox review automation
+# Raw to Wiki Automation
 
-Denne automation skal køre hver 4. time og gøre nye noter mere anvendelige.
+Denne automation kører hver 4. time og holder Second Brain selvopretholdende.
 
-## Formål
+## Hovedopgave
 
-Automationens opgave er ikke bare at rydde op. Den skal gøre noter søgbare, linkede og brugbare.
+Behandl nyt materiale i:
+
+```text
+raw/
+```
+
+og omsæt det til:
+
+```text
+wiki/
+crm/
+journal/
+index.md
+log.md
+```
+
+Når en rå fil er behandlet, flyttes den til:
+
+```text
+raw/processed/
+```
 
 ## Den må gerne
 
-- gennemgå `00_Inbox`
-- gennemgå nye kilder i `10_Knowledge/Sources`
-- foreslå eller oprette en bedre placering
-- lave korte, anvendelige noter i `10_Knowledge/Notes`
-- oprette opgaver i `50_Tasks`, hvis noget tydeligt er en opgave
-- oprette eller opdatere kundekort i `30_Areas/CRM`
-- linke relevante noter sammen med wikilinks
-- flytte tydeligt behandlede rå noter til `90_Archive/Processed`
-- skrive en kort rapport i `80_AI-Review`
+- læse nye filer i `raw/`
+- oprette eller opdatere wiki-sider i `wiki/`
+- udtrække centrale begreber, personer, værktøjer og temaer
+- lave wikilinks mellem relaterede wiki-sider
+- oprette eller opdatere kunder/personer i `crm/`
+- opdatere `index.md`
+- skrive rapport i `80_AI-Review/`
+- flytte færdigbehandlede rå filer til `raw/processed/`
 
 ## Den må ikke
 
-- slette noter permanent
-- omskrive private noter hårdt
+- slette rå kilder permanent
+- omskrive journalnoter hårdt
 - ændre filer med `ai_lock: true`
 - gætte på følsomme kundeoplysninger
-- flytte noget uklart uden at lægge en note i `80_AI-Review`
+- behandle uklart materiale som fakta
 
-## Hvad en behandlet note skal have
+## Wiki-standard
 
-Når en note bliver gjort anvendelig, bør den have:
+En wiki-side bør have:
 
-- tydelig titel
-- YAML-frontmatter
-- status
-- type
-- kilde eller oprindelse
-- relevante wikilinks
-- en kort forklaring på hvorfor noten er nyttig
-- næste handling, hvis der er en
+```markdown
+---
+type: wiki
+status: active
+source:
+created:
+updated:
+sensitivity: private
+ai_lock: false
+---
 
-## Review-rapport
+# Titel
 
-Hver kørsel bør skrive en rapport i:
+## Kort fortalt
 
-```text
-80_AI-Review/
+## Centrale pointer
+
+## Hvorfor det er nyttigt
+
+## Relaterede noter
+
+## Kilder
 ```
 
-Rapporten skal vise:
+## Rapport
 
-- hvilke filer der blev behandlet
-- hvad der blev flyttet eller oprettet
-- hvad der kræver manuel beslutning
-- om der var noget, der blev sprunget over
+Hver kørsel skal skrive en kort rapport i `80_AI-Review/`:
+
+- rå filer behandlet
+- wiki-sider oprettet eller opdateret
+- CRM-sider oprettet eller opdateret
+- links tilføjet
+- filer flyttet til `raw/processed/`
+- ting der kræver manuel beslutning

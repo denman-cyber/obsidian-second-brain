@@ -58,13 +58,13 @@ def run_command(command: str) -> str:
 
 
 def handle_message(chat_id: int, text: str) -> None:
-    allowed_prefixes = ("todo ", "done ", "note ", "web ", "youtube ", "plan i morgen ", "shoot ", "kunde ")
+    allowed_prefixes = ("todo ", "done ", "note ", "web ", "youtube ", "journal ", "plan i morgen ", "shoot ", "kunde ")
     lower = text.lower()
 
     if lower in ("/start", "start", "hjælp", "help"):
         send_message(
             chat_id,
-            "Skriv fx: todo Ring til kunde, note Ide, web https://..., youtube https://..., shoot Kunde X, eller kunde Kunde X.",
+            "Skriv fx: todo Ring til kunde, note Ide, web https://..., youtube https://..., journal Jeg tænker..., shoot Kunde X, eller kunde Kunde X.",
         )
         return
 
