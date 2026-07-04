@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import os
+import re
 import subprocess
 import time
 import urllib.parse
@@ -42,6 +43,29 @@ def send_message(chat_id: int, text: str) -> None:
     telegram_request("sendMessage", {"chat_id": chat_id, "text": text[:3900]})
 
 
+def split_commands(text: str) -> list:
+    inline_allowed = r"(?:todo|done|note|shoot|plan i morgen)"
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    commands = []
+
+    for line in lines or [text.strip()]:
+        parts = [part.strip() for part in re.split(rf"(?i)(?=\b{inline_allowed}\s+)", line) if part.strip()]
+        commands.extend(parts)
+
+    return commands
+
+
+def run_command(command: str) -> str:
+    result = subprocess.run(
+        [str(COMMAND_SCRIPT), command],
+        cwd=str(VAULT_DIR),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    return result.stdout.strip() or result.stderr.strip() or "Kommando behandlet."
+
+
 def handle_message(chat_id: int, text: str) -> None:
     allowed_prefixes = ("todo ", "done ", "note ", "plan i morgen ", "shoot ", "kunde ")
     lower = text.lower()
@@ -53,18 +77,15 @@ def handle_message(chat_id: int, text: str) -> None:
         )
         return
 
-    if not lower.startswith(allowed_prefixes):
+    commands = split_commands(text)
+    invalid = [command for command in commands if not command.lower().startswith(allowed_prefixes)]
+
+    if not commands or invalid:
         send_message(chat_id, "Jeg forstod ikke kommandoen. Brug todo, done, note, plan i morgen, shoot eller kunde.")
         return
 
-    result = subprocess.run(
-        [str(COMMAND_SCRIPT), text],
-        cwd=str(VAULT_DIR),
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    reply = result.stdout.strip() or result.stderr.strip() or "Kommando behandlet."
+    replies = [run_command(command) for command in commands]
+    reply = "\n\n".join(replies)
     send_message(chat_id, reply)
 
 

@@ -52,6 +52,15 @@ note Ide til shoot
 shoot Kunde X, lørdag kl. 10
 ```
 
+Du kan også sende flere kommandoer i samme besked. Mest stabilt er én kommando pr. linje:
+
+```text
+note Ide til ny foto-pakke
+shoot Kunde X, lørdag kl 10, portrætter
+plan i morgen Følg op på tilbud
+done Backup test fra Telegram
+```
+
 ## 6. Næste trin
 
 Når botten virker manuelt, kan den startes automatisk på Mac Mini med LaunchAgent.
