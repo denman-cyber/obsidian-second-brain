@@ -9,8 +9,8 @@ from pathlib import Path
 from typing import Optional
 
 
-VAULT_DIR = Path(__file__).resolve().parents[1]
-COMMAND_SCRIPT = VAULT_DIR / "Scripts" / "second-brain-command.sh"
+VAULT_DIR = Path(os.environ.get("SECOND_BRAIN_VAULT", "/Users/christian/Documents/Codex/Second brain"))
+COMMAND_SCRIPT = Path(os.environ.get("SECOND_BRAIN_COMMAND_SCRIPT", str(VAULT_DIR / "Scripts" / "second-brain-command.sh")))
 ENV_FILE = Path(os.environ.get("SECOND_BRAIN_ENV", Path.home() / ".second-brain.env"))
 
 

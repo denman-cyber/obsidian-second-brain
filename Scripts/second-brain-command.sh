@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-VAULT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+VAULT_DIR="${SECOND_BRAIN_VAULT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
 DAY="$(date +%F)"
 NOW="$(date '+%Y-%m-%d %H:%M:%S')"
 

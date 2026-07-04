@@ -11,6 +11,14 @@ Scripts/install-telegram-launchagent.sh
 
 Når den er kørt, starter Telegram-botten automatisk som macOS-service.
 
+Scriptet kopierer en lille runner til:
+
+```text
+/Users/christian/.second-brain/
+```
+
+Det gør botten mere stabil på macOS, fordi LaunchAgenten ikke behøver at åbne selve scriptfilen direkte inde fra Documents-mappen.
+
 ## Test
 
 Skriv til botten i Telegram:
