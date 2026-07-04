@@ -11,3 +11,4 @@ Brug denne log til ændringer udført af AI, automatiseringer eller større manu
 | 2026-07-04 16:44:31 | Local command | Created inbox note | 00_Inbox/20260704-164431-test-af-hurtig-inbox-note.md | OK |
 | 2026-07-04 16:44:34 | Local command | Marked todo done | 40_Daily/2026-07-04.md | OK |
 | 2026-07-04 | Codex | Tilføjede Telegram bot-script, reminder-script og LaunchAgent-skabelon | Scripts, Setup | OK |
+| 2026-07-04 | Codex | Oprettede lokal secret-placeholder uden for vaulten og Telegram tjekliste | ~/.second-brain.env, Setup | OK |
