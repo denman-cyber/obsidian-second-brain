@@ -47,11 +47,13 @@ log_action() {
   local action="$1"
   local files="$2"
   local result="$3"
-  if [[ ! -w "$LOG_FILE" ]]; then
-    echo "Kan ikke skrive til log.md. macOS blokerer sandsynligvis botten fra vaulten."
-    exit 13
+
+  if { printf '| %s | Local command | %s | %s | %s |\n' "$NOW" "$action" "$files" "$result"; } >> "$LOG_FILE" 2>/dev/null; then
+    return 0
   fi
-  printf '| %s | Local command | %s | %s | %s |\n' "$NOW" "$action" "$files" "$result" >> "$LOG_FILE"
+
+  echo "Bemærk: kommandoen blev udført, men macOS blokerede skrivning til log.md." >&2
+  return 0
 }
 
 if [[ $# -lt 1 ]]; then
