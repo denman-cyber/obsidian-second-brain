@@ -41,3 +41,5 @@ Brug denne log til ændringer udført af AI, automatiseringer eller større manu
 | 2026-07-05 11:45:28 | Local command | Created raw note | raw/20260705-114528-note-virker-denne-her-automatiske-indtalebeskedting-så-det-virker-rigtigt-faktisk.md | OK |
 | 2026-07-05 13:00:51 | Local command | Created raw note | raw/20260705-130051-note-jeg-tænker-at-jeg-har-allerede-købt-ind-så-de-andre-to-skal-nok-nå-senere.md | OK |
 | 2026-07-05 19:41:23 | Codex automation | Gennemgik raw-indbakke og fastholdt uklar note til manuel afklaring | raw, 80_AI-Review | Needs manual clarification |
+| 2026-07-05 21:37:21 | Local command | Created raw note | raw/20260705-213721-note-ja-alle-tre-er-løst.md | OK |
+| 2026-07-05 23:41:43 | Codex automation | Gennemgik raw-indbakke og arkiverede afsluttede statusnoter | raw, 80_AI-Review | Ready; push blocked |
