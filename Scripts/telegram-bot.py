@@ -5,6 +5,7 @@ import subprocess
 import time
 import urllib.parse
 import urllib.request
+import uuid
 from pathlib import Path
 from typing import Optional
 
@@ -12,6 +13,8 @@ from typing import Optional
 VAULT_DIR = Path(os.environ.get("SECOND_BRAIN_VAULT", "/Users/christian/Documents/Codex/Second brain"))
 COMMAND_SCRIPT = Path(os.environ.get("SECOND_BRAIN_COMMAND_SCRIPT", str(VAULT_DIR / "Scripts" / "second-brain-command.sh")))
 ENV_FILE = Path(os.environ.get("SECOND_BRAIN_ENV", Path.home() / ".second-brain.env"))
+VOICE_DIR = Path(os.environ.get("SECOND_BRAIN_VOICE_DIR", "/tmp/second-brain-voice"))
+TRANSCRIPTION_MODEL = os.environ.get("OPENAI_TRANSCRIPTION_MODEL", "whisper-1")
 
 
 def load_env_file(path: Path) -> None:
@@ -38,6 +41,11 @@ def telegram_request(method: str, data: Optional[dict] = None) -> dict:
         return json.loads(response.read().decode())
 
 
+def telegram_file_url(file_path: str) -> str:
+    token = os.environ["TELEGRAM_BOT_TOKEN"]
+    return f"https://api.telegram.org/file/bot{token}/{file_path}"
+
+
 def send_message(chat_id: int, text: str) -> None:
     telegram_request("sendMessage", {"chat_id": chat_id, "text": text[:3900]})
 
@@ -57,6 +65,110 @@ def run_command(command: str) -> str:
     return result.stdout.strip() or result.stderr.strip() or "Kommando behandlet."
 
 
+def download_telegram_file(file_id: str, suffix: str = ".ogg") -> Path:
+    VOICE_DIR.mkdir(parents=True, exist_ok=True)
+    file_data = telegram_request("getFile", {"file_id": file_id})
+    file_path = file_data.get("result", {}).get("file_path")
+    if not file_path:
+        raise RuntimeError("Telegram kunne ikke finde lydfilen.")
+
+    target = VOICE_DIR / f"{uuid.uuid4().hex}{suffix}"
+    with urllib.request.urlopen(telegram_file_url(file_path), timeout=60) as response:
+        target.write_bytes(response.read())
+    return target
+
+
+def multipart_form_data(fields: dict, files: dict) -> tuple:
+    boundary = f"----second-brain-{uuid.uuid4().hex}"
+    body = bytearray()
+
+    for name, value in fields.items():
+        body.extend(f"--{boundary}\r\n".encode())
+        body.extend(f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode())
+        body.extend(str(value).encode())
+        body.extend(b"\r\n")
+
+    for name, file_info in files.items():
+        filename, content_type, content = file_info
+        body.extend(f"--{boundary}\r\n".encode())
+        body.extend(f'Content-Disposition: form-data; name="{name}"; filename="{filename}"\r\n'.encode())
+        body.extend(f"Content-Type: {content_type}\r\n\r\n".encode())
+        body.extend(content)
+        body.extend(b"\r\n")
+
+    body.extend(f"--{boundary}--\r\n".encode())
+    return bytes(body), f"multipart/form-data; boundary={boundary}"
+
+
+def transcribe_audio(path: Path) -> str:
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError(f"Mangler OPENAI_API_KEY i {ENV_FILE}")
+
+    fields = {
+        "model": os.environ.get("OPENAI_TRANSCRIPTION_MODEL", TRANSCRIPTION_MODEL),
+        "language": os.environ.get("OPENAI_TRANSCRIPTION_LANGUAGE", "da"),
+        "response_format": "json",
+    }
+    files = {
+        "file": (path.name, "audio/ogg", path.read_bytes()),
+    }
+    body, content_type = multipart_form_data(fields, files)
+    request = urllib.request.Request(
+        "https://api.openai.com/v1/audio/transcriptions",
+        data=body,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": content_type,
+        },
+        method="POST",
+    )
+
+    with urllib.request.urlopen(request, timeout=120) as response:
+        data = json.loads(response.read().decode())
+    text = (data.get("text") or "").strip()
+    if not text:
+        raise RuntimeError("OpenAI returnerede ingen transskription.")
+    return text
+
+
+def handle_transcribed_text(chat_id: int, text: str) -> None:
+    allowed_prefixes = ("todo ", "done ", "note ", "web ", "youtube ", "journal ", "plan i morgen ", "shoot ", "kunde ")
+    command_text = text.strip()
+    if not command_text.lower().startswith(allowed_prefixes):
+        command_text = f"note {command_text}"
+
+    commands = split_commands(command_text)
+    replies = [run_command(command) for command in commands]
+    reply = "Transskriberet:\n" + text + "\n\n" + "\n\n".join(replies)
+    send_message(chat_id, reply)
+
+
+def handle_voice_message(chat_id: int, message: dict) -> None:
+    audio = message.get("voice") or message.get("audio")
+    if not audio:
+        return
+
+    file_id = audio.get("file_id")
+    mime_type = audio.get("mime_type", "audio/ogg")
+    suffix = ".ogg"
+    if "mpeg" in mime_type or "mp3" in mime_type:
+        suffix = ".mp3"
+    elif "m4a" in mime_type or "mp4" in mime_type:
+        suffix = ".m4a"
+
+    if not file_id:
+        send_message(chat_id, "Jeg kunne ikke finde lydfilen i Telegram-beskeden.")
+        return
+
+    try:
+        audio_path = download_telegram_file(file_id, suffix=suffix)
+        transcript = transcribe_audio(audio_path)
+        handle_transcribed_text(chat_id, transcript)
+    except Exception as exc:
+        send_message(chat_id, f"Voice-beskeden kunne ikke transskriberes: {exc}")
+
+
 def handle_message(chat_id: int, text: str) -> None:
     allowed_prefixes = ("todo ", "done ", "note ", "web ", "youtube ", "journal ", "plan i morgen ", "shoot ", "kunde ")
     lower = text.lower()
@@ -64,7 +176,7 @@ def handle_message(chat_id: int, text: str) -> None:
     if lower in ("/start", "start", "hjælp", "help"):
         send_message(
             chat_id,
-            "Skriv fx: todo Ring til kunde, note Ide, web https://..., youtube https://..., journal Jeg tænker..., shoot Kunde X, eller kunde Kunde X.",
+            "Skriv eller indtal fx: todo Ring til kunde, note Ide, journal Jeg tænker..., shoot Kunde X, eller kunde Kunde X.",
         )
         return
 
@@ -72,7 +184,7 @@ def handle_message(chat_id: int, text: str) -> None:
     invalid = [command for command in commands if not command.lower().startswith(allowed_prefixes)]
 
     if not commands or invalid:
-        send_message(chat_id, "Jeg forstod ikke kommandoen. Brug todo, done, note, plan i morgen, shoot eller kunde.")
+        send_message(chat_id, "Jeg forstod ikke kommandoen. Brug todo, done, note, web, youtube, journal, plan i morgen, shoot eller kunde.")
         return
 
     replies = [run_command(command) for command in commands]
@@ -96,7 +208,9 @@ def main() -> None:
                 chat = message.get("chat") or {}
                 text = message.get("text")
                 chat_id = chat.get("id")
-                if chat_id and text:
+                if chat_id and (message.get("voice") or message.get("audio")):
+                    handle_voice_message(chat_id, message)
+                elif chat_id and text:
                     handle_message(chat_id, text.strip())
         except KeyboardInterrupt:
             raise

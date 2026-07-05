@@ -29,6 +29,7 @@ Brug denne log til ændringer udført af AI, automatiseringer eller større manu
 | 2026-07-04 | Codex | Skiftede til kanonisk raw -> wiki -> processed arkitektur for selvopretholdende Second Brain | agents.md, raw, wiki, crm, journal | Ready |
 | 2026-07-04 | Codex | Tilføjede opsætningsguide til Obsidian Web Clipper med destination raw | Setup | Ready |
 | 2026-07-04 | Codex | Ryddede topniveau-mapper og flyttede legacy-struktur til arkiv | 90_Archive/Legacy | Ready |
+| 2026-07-05 | Codex | Tilføjede Telegram voice-transskription via OpenAI Whisper | Scripts, Setup | Needs OPENAI_API_KEY |
 | 2026-07-05 | Codex automation | Behandlede raw-indbakke til wiki, arkiverede testinput og skrev inbox review | raw, wiki, index.md, 80_AI-Review | Ready |
 | 2026-07-05 05:01:58 | Codex automation | Gennemgik raw-indbakke uden nye videnskilder og arkiverede macOS-systemfil | raw, 90_Archive/System files, 80_AI-Review | Ready |
 | 2026-07-05 09:03:03 | Codex automation | Gennemgik raw-indbakke uden nye rå kilder | raw, 80_AI-Review | Ready |

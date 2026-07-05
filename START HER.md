@@ -23,6 +23,8 @@ note Husk ideen om en ny foto-pakke
 
 Hvis du sender flere ting i samme Telegram-besked, så brug én kommando pr. linje.
 
+Du kan også indtale voice-beskeder i Telegram. Se: [[Setup/Telegram voice med OpenAI Whisper]]
+
 Kig i:
 
 - [[daily/2026-07-04]]
