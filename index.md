@@ -19,6 +19,7 @@ Start her: [[START HER]]
 
 ## Viden
 - [[wiki]]
+- [[wiki/AI-baseret Second Brain]]
 - [[wiki/Sådan bliver noter anvendelige]]
 - [[raw]]
 
