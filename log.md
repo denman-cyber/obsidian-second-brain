@@ -38,3 +38,4 @@ Brug denne log til ændringer udført af AI, automatiseringer eller større manu
 | 2026-07-04 21:05:37 | Local command | Created raw note | raw/20260704-210537-note-test-raw-arkitektur.md | OK |
 | 2026-07-04 21:05:37 | Local command | Created journal entry | journal/2026-07-04.md | OK |
 | 2026-07-05 11:45:28 | Local command | Created raw note | raw/20260705-114528-note-virker-denne-her-automatiske-indtalebeskedting-så-det-virker-rigtigt-faktisk.md | OK |
+| 2026-07-05 13:00:51 | Local command | Created raw note | raw/20260705-130051-note-jeg-tænker-at-jeg-har-allerede-købt-ind-så-de-andre-to-skal-nok-nå-senere.md | OK |
