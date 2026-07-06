@@ -16,10 +16,12 @@ Start her: [[START HER]]
 
 ## Arbejde og projekter
 - [[crm]]
+- [[wiki/Udendørs babyfotografering]]
 
 ## Viden
 - [[wiki]]
 - [[wiki/AI-baseret Second Brain]]
+- [[wiki/Udendørs babyfotografering]]
 - [[wiki/Sådan bliver noter anvendelige]]
 - [[raw]]
 
