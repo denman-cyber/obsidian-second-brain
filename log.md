@@ -44,3 +44,4 @@ Brug denne log til ændringer udført af AI, automatiseringer eller større manu
 | 2026-07-05 21:37:21 | Local command | Created raw note | raw/20260705-213721-note-ja-alle-tre-er-løst.md | OK |
 | 2026-07-05 23:41:43 | Codex automation | Gennemgik raw-indbakke og arkiverede afsluttede statusnoter | raw, 80_AI-Review | Ready; push blocked |
 | 2026-07-06 03:45:51 | Codex automation | Gennemgik raw-indbakke uden nye rå kilder | raw, 80_AI-Review | Ready |
+| 2026-07-06 06:17:26 | Local command | Created raw note | raw/20260706-061726-note-dette-er-en-meget-lang-testbesked-som-skal-vise-at-filnavnet-ikke-længere-bliver.md | OK |

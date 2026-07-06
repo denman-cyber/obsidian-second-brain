@@ -13,10 +13,22 @@ safe_name() {
   echo "$1" | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]æøåÆØÅ' '-' | sed 's/^-//; s/-$//'
 }
 
+short_slug() {
+  local slug
+  slug="$(safe_name "$1")"
+  slug="${slug[1,80]}"
+  echo "$slug" | sed 's/-$//'
+}
+
 timestamp_file() {
   local prefix="$1"
   local text="$2"
-  echo "$(date '+%Y%m%d-%H%M%S')-$prefix-$(safe_name "$text").md"
+  local slug
+  slug="$(short_slug "$text")"
+  if [[ -z "$slug" ]]; then
+    slug="untitled"
+  fi
+  echo "$(date '+%Y%m%d-%H%M%S')-$prefix-$slug.md"
 }
 
 append_after_heading() {
@@ -103,7 +115,7 @@ case "$LOWER" in
 
   note\ *)
     TEXT="${COMMAND#note }"
-    FILE="$VAULT_DIR/raw/$(date '+%Y%m%d-%H%M%S')-note-$(safe_name "$TEXT").md"
+    FILE="$VAULT_DIR/raw/$(timestamp_file note "$TEXT")"
     cat > "$FILE" <<EOF
 ---
 type: raw_note
